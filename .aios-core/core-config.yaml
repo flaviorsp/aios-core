@@ -20,6 +20,7 @@ architecture:
 customTechnicalDocuments: null
 devLoadAlwaysFiles:
   - docs/framework/coding-standards.md
+  - docs/framework/engineering-manifesto.md
   - docs/framework/tech-stack.md
   - docs/framework/source-tree.md
 devLoadAlwaysFilesFallback:

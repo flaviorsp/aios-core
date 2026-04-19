@@ -1,0 +1,187 @@
+handoff:
+  from_agent: aiox-sm
+  to_agent: orchestrator
+  timestamp: "2026-04-19T00:00:00Z"
+  team: 5
+  consumed: false
+
+  program: "Parceiros-Clinicas Wave-4a"
+  mission: "Wave-4a Week 1 final sync — 5-team orchestration complete"
+
+  # ---------------------------------------------------------------------------
+  # 5-Team Orchestration Summary
+  # ---------------------------------------------------------------------------
+  teams_executed:
+    - team: 1
+      agent: aiox-pm
+      outcome: "Wave-4 split decision (4a=36pts, 4b=34pts). YAML v2.1.0. wave_4_kickoff block added."
+      status: COMPLETE
+
+    - team: 2
+      agent: aiox-qa
+      outcome: "360° audit. CONDITIONAL_GO verdict. 10 TDs (TD-AUDIT-W4-01→10). YAML v2.1.1."
+      status: COMPLETE
+      doc: "pa/docs/WAVE-4-KICKOFF-AUDIT.md"
+
+    - team: 3
+      agent: aiox-dev
+      outcome: "Wave-4a Week 1 pre-work. 4 commits local (branch dev). Contracts frozen. ARCH-DECISION TD-AUDIT-W4-03 recorded."
+      status: COMPLETE
+      commits:
+        - {sha: "dcb5ef37", scope: "fix(TD-W2-04): rack-attack throttles", verdict: PASS}
+        - {sha: "9d7c782e", scope: "fix(TD-W2-10): CredenciamentoService skeleton", verdict: PASS}
+        - {sha: "7dfdd7e6", scope: "feat(story-5.1): R2 + iron-session contracts", verdict: PASS}
+        - {sha: "cfc3ac02", scope: "docs(wave-4a): TD-AUDIT-W4-03 resolution + YAML", verdict: PASS}
+
+    - team: 4
+      agent: aiox-qa
+      outcome: "Loop re-audit. CONDITIONAL_PASS. Quality gates CLEAN (typecheck, eslint 0 errors, ruby -c OK, YAML valid). 4 new TDs (TD-AUDIT-W4-11→14)."
+      status: COMPLETE
+      doc: "pa/docs/WAVE-4A-WEEK1-AUDIT-LOOP.md"
+
+    - team: 5
+      agent: aiox-sm
+      outcome: "Final sync. YAML v2.1.2. TD-AUDIT-W4-11/12/13/14 added. Epic-5 descriptor updated. Day 1-5 sequencing added. Handoffs created."
+      status: COMPLETE
+
+  # ---------------------------------------------------------------------------
+  # Wave-4a Week 1 Final State
+  # ---------------------------------------------------------------------------
+  wave_4a_week_1_state:
+    overall_status: IN_PROGRESS
+    pre_work_status: DELIVERED
+    bodies_status: BLOCKED_ON_EXTERNAL_DEPS
+    story_51_file_list_progress: "5/22 items delivered (contracts only)"
+    audit_verdict: CONDITIONAL_PASS
+    quality_gates:
+      typescript: CLEAN
+      eslint: "0 errors, 1 cosmetic warning (TD-AUDIT-W4-11)"
+      ruby_syntax: OK
+      yaml_parse: OK
+      rubocop: DEFERRED
+      rspec_jest: DEFERRED
+
+  # ---------------------------------------------------------------------------
+  # All Files Modified (Teams 1-5 consolidated)
+  # ---------------------------------------------------------------------------
+  files_modified_all_teams:
+    team_3_source_code:
+      - pa/apps/portalamparo-parceiros/src/lib/session.ts
+      - pa/apps/portalamparo-parceiros/src/lib/r2-storage.ts
+      - pa/apps/portalamparo-parceiros/.env.example
+      - pa/backend/portalamparo-chatwoot/config/initializers/rack_attack.rb
+      - pa/backend/portalamparo-chatwoot/app/services/pa/credenciamento_service.rb
+    team_3_docs:
+      - pa/docs/EPIC-EXECUTION-PARCEIROS-CLINICAS.yaml
+      - pa/docs/stories/active/epic-5/5.1.story.md
+    team_4_docs:
+      - pa/docs/WAVE-4A-WEEK1-AUDIT-LOOP.md
+      - .aiox/handoffs/handoff-qa-to-sm-20260419-wave4-loop-complete.yaml
+    team_5_docs:
+      - pa/docs/EPIC-EXECUTION-PARCEIROS-CLINICAS.yaml
+      - pa/docs/stories/active/epic-5/EPIC-5-FEEDBACK-LOOPS.md
+      - .aiox/handoffs/handoff-sm-to-data-engineer-20260419-pa-clinica-credentials.yaml
+      - .aiox/handoffs/handoff-sm-to-orchestrator-20260419-wave4a-week1-final.yaml
+    total_files_modified: 14
+
+  # ---------------------------------------------------------------------------
+  # TDs Summary
+  # ---------------------------------------------------------------------------
+  tech_debts_total_in_yaml:
+    original_carry_over: 27
+    td_audit_w4_01_to_10: 10
+    td_audit_w4_11_to_14: 4
+    total: 41
+  resolved_during_wave_4a_week_1:
+    - id: TD-W2-04
+      resolution: "rack_attack.rb — throttles for credenciamento + upload + clinic login"
+    - id: TD-AUDIT-W4-03
+      resolution: "ARCH-DECISION recorded in 5.1.story.md — pa_clinica_credentials + role-discriminated iron-session"
+
+  # ---------------------------------------------------------------------------
+  # Commits Created (all teams)
+  # ---------------------------------------------------------------------------
+  all_commits:
+    team_3:
+      - {sha: "dcb5ef37", message: "fix(TD-W2-04): rack-attack throttles", branch: "dev", pushed: false}
+      - {sha: "9d7c782e", message: "fix(TD-W2-10): CredenciamentoService skeleton", branch: "dev", pushed: false}
+      - {sha: "7dfdd7e6", message: "feat(story-5.1): R2 + iron-session contracts", branch: "dev", pushed: false}
+      - {sha: "cfc3ac02", message: "docs(wave-4a): TD-AUDIT-W4-03 resolution + YAML", branch: "dev", pushed: false}
+    team_5: []  # doc-only updates, no commit authored (no git commands run by SM)
+  total_unpushed_commits: 4
+  push_pending: true
+  push_authority: "@devops (exclusive per Constitution Article II)"
+
+  # ---------------------------------------------------------------------------
+  # External Dependencies Checklist
+  # ---------------------------------------------------------------------------
+  external_dependencies_checklist:
+    - {id: BLOCK-1, owner: "@devops", action: "Provision Cloudflare R2 bucket portalamparo-parceiros-prod (+ dev)", status: pending, unblocks: "Day 2-3 TD-W2-01 body"}
+    - {id: BLOCK-2, owner: "@devops or @dev", action: "npm install iron-session @aws-sdk/client-s3 @aws-sdk/s3-request-presigner in pa/apps/portalamparo-parceiros/", status: pending, unblocks: "Day 2-3 TD-W2-01 + TD-W2-02 bodies"}
+    - {id: BLOCK-3, owner: "@devops", action: "Apply Rails migrations 20260418000001 + 20260418000002 to staging", status: pending, unblocks: "Day 4 + Story 5.3 migration chain"}
+    - {id: BLOCK-4, owner: "user (flaviorsp)", action: "Rotate IRON_SESSION_PASSWORD + R2 API tokens via 1Password", status: pending, unblocks: "Day 5 Story 5.1 prod deploy", note: "Non-blocking for dev work"}
+    - {id: BLOCK-5, owner: "@devops", action: "Surface Rubocop binary for host-level pre-commit gate", status: pending, unblocks: "Ruby pre-commit automation (TD-AUDIT-W4-12)"}
+    - {id: BLOCK-6, owner: "@data-engineer", action: "Review pa_clinica_credentials DDL — see handoff-sm-to-data-engineer-20260419", status: pending, unblocks: "Story 5.1 body Day 4-5"}
+
+  # ---------------------------------------------------------------------------
+  # Handoff Artifacts Created by Team 5
+  # ---------------------------------------------------------------------------
+  handoffs_created:
+    - path: ".aiox/handoffs/handoff-sm-to-data-engineer-20260419-pa-clinica-credentials.yaml"
+      purpose: "Request DDL review + migration for pa_clinica_credentials (ARCH-DECISION TD-AUDIT-W4-03)"
+      consumed: false
+    - path: ".aiox/handoffs/handoff-sm-to-orchestrator-20260419-wave4a-week1-final.yaml"
+      purpose: "This file — final orchestration summary for parent orchestrator"
+      consumed: false
+
+  # ---------------------------------------------------------------------------
+  # Recommended Next Actions
+  # ---------------------------------------------------------------------------
+  recommended_next_actions:
+    immediate_devops:
+      - "git push branch dev (4 unpushed commits from Team 3)"
+      - "Provision Cloudflare R2 bucket (BLOCK-1)"
+      - "npm install iron-session @aws-sdk/client-s3 @aws-sdk/s3-request-presigner in pa/apps/portalamparo-parceiros/ (BLOCK-2)"
+      - "Apply Rails migrations 20260418000001 + 20260418000002 to staging (BLOCK-3)"
+      - "Surface Rubocop host binary (BLOCK-5 / TD-AUDIT-W4-12)"
+
+    immediate_user:
+      - "Rotate IRON_SESSION_PASSWORD + R2 API tokens via 1Password (BLOCK-4)"
+      - "Update pa/backend/portalamparo-chatwoot/.env.production with new secrets"
+
+    immediate_data_engineer:
+      - "Read handoff-sm-to-data-engineer-20260419-pa-clinica-credentials.yaml"
+      - "Design DDL + Rails migration for pa_clinica_credentials table"
+      - "Deliver migration file to pa/backend/portalamparo-chatwoot/db/migrate/"
+
+    re_spawn_team_6:
+      agent: "aiox-dev"
+      condition: "BLOCK-1 + BLOCK-2 resolved (@devops done) AND BLOCK-6 resolved (@data-engineer done)"
+      mission: |
+        Wave-4a Week 1 Day 2-5 execution:
+        - Implement TD-W2-01 body (uploadToR2, deleteFromR2, signedUploadUrl, migrate upload route)
+        - Implement TD-W2-02 body (sealData/unsealData in session.ts, migrate auth routes)
+        - Story 5.1 scaffold body (dashboard/page.tsx, dashboard/edit/page.tsx, clinic login route)
+        - TD-W2-03 async geocoding (enqueue GeocodificarClinicaJob from CredenciamentoService)
+        - TD-AUDIT-W4-13 (normalize_payload guard), TD-AUDIT-W4-14 (R2_CATEGORIES const), TD-AUDIT-W4-11 (eslint directive cleanup)
+      references:
+        - "pa/docs/stories/active/epic-5/5.1.story.md"
+        - "pa/docs/EPIC-EXECUTION-PARCEIROS-CLINICAS.yaml:wave_4a_week_1_execution"
+        - ".aiox/handoffs/handoff-qa-to-sm-20260419-wave4-loop-complete.yaml"
+
+  # ---------------------------------------------------------------------------
+  # Confidence Assessment
+  # ---------------------------------------------------------------------------
+  confidence:
+    level: HIGH
+    rationale: |
+      ARCH-DECISION TD-AUDIT-W4-03 is resolved and documented (file:line evidence in 5.1.story.md).
+      4 commits from Team 3 all PASS in Team 4 loop audit with file:line evidence.
+      Quality gates CLEAN: typecheck, eslint 0 errors, ruby -c OK, YAML parseable.
+      All TD definitions captured from handoff-qa-to-sm artifact (primary source) —
+      no inference required. External blockers are fully enumerated with owners.
+      Only uncertainty: @data-engineer DDL review timeline (no SLA set).
+    caveats:
+      - "4 commits not yet pushed to origin/dev — push authority is @devops"
+      - "pa_clinica_credentials schema is @data-engineer's decision — suggestion only in handoff"
+      - "Rubocop gate remains unvalidated (deferred by Team 4, TD-AUDIT-W4-12)"
